@@ -1,0 +1,28 @@
+version: '3.9'
+
+services:
+  multi-tenant.api:
+    container_name: "multi-tenant.api"
+    hostname: "multi-tenant.api"
+    image: ${DOCKER_REGISTRY-}multitenantapi
+    build:
+      context: .
+      dockerfile: multi-tenant.Api/multi-tenant.Api/Dockerfile
+    depends_on:
+      - multi-tenant.db
+
+  multi-tenant.db:
+    container_name: "multi-tenant.db"
+    hostname: "multi-tenant.db"
+    image: postgres:${POSTGRES_VERSION:-latest}
+    ports:
+      - "5438:5432"
+    env_file:
+      - env/.postgres-env
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  pgdata:
+    driver: local
