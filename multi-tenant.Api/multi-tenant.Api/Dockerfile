@@ -11,6 +11,7 @@ COPY ["multi-tenant.Api/multi-tenant.Api/multi-tenant.Api.csproj", "multi-tenant
 COPY ["multi-tenant.Api/multi-tenant.Managers/multi-tenant.Managers.csproj", "multi-tenant.Api/multi-tenant.Managers/"]
 COPY ["multi-tenant.Api/multi-tenant.Repositories/multi-tenant.Repositories.csproj", "multi-tenant.Api/multi-tenant.Repositories/"]
 COPY ["multi-tenant.Api/multi-tenant.Models/multi-tenant.Models.csproj", "multi-tenant.Api/multi-tenant.Models/"]
+COPY ["core/core/core.csproj", "core/core/"]
 RUN dotnet restore "multi-tenant.Api/multi-tenant.Api/multi-tenant.Api.csproj"
 COPY . .
 WORKDIR "/src/multi-tenant.Api/multi-tenant.Api"
