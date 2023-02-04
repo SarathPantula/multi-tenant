@@ -10,6 +10,7 @@ services:
       dockerfile: multi-tenant.Api/multi-tenant.Api/Dockerfile
     depends_on:
       - multi-tenant.db
+      - redis
 
   multi-tenant.db:
     container_name: "multi-tenant.db"
@@ -22,6 +23,13 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  redis:
+    container_name: "redis"
+    hostname: "redis"
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
 
 volumes:
   pgdata:
