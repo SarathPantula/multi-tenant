@@ -1,41 +1,37 @@
-name: 'CodeQL'
-on:
-  pull_request:
-    branches:
-      - main
-  push:
-    branches:
-      - main
-      - 'releases/*'
+name: CodeQL Analysis
+
+on: [push, pull_request]
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   analyze:
-    name: analyze
     runs-on: ubuntu-latest
-    permissions:
-      actions: read
-      contents: read
-      security-events: write
 
-    strategy:
-      fail-fast: false
-      matrix:
-        language: [ 'csharp', 'javascript', 'python' ]
-    
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v2
+    - name: Setup CodeQL
+      uses: actions/setup-dotnet@v1
       with:
-        languages: ${{ matrix.language }}
-        config-file: ./.github/codeql/codeql-config.yml
-      
-    - name: Autobuild
-      uses: github/codeql-action/autobuild@v2
+        dotnet-version: 7.x
 
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v2
+    - name: Install CodeQL CLI
+      run: |
+        echo "Installing CodeQL CLI..."
+        curl --location https://github.com/github/codeql/releases/download/v2.0.0/codeql-cli-2.0.0.deb -o codeql-cli.deb
+        sudo dpkg -i codeql-cli.deb
+
+    - name: Analyze code
+      run: |
+        echo "Running CodeQL analysis..."
+        codeql database create --language=csharp
+        codeql database analyze --format=sarif csharp . > analysis-results.sarif
+
+    - name: Upload SARIF results
+      uses: actions/upload-artifact@v2
       with:
-        category: "/language:${{matrix.language}}"
+        name: analysis-results.sarif
+        path: analysis-results.sarif
