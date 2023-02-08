@@ -21,15 +21,14 @@ jobs:
     - name: Install dependencies
       run: |
         echo "Installing dependencies..."
-        sudo apt-get update
+        sudo apt-get update && apt-get upgrade -y
         sudo apt-get install curl
         sudo apt-get install dpkg
 
     - name: Install CodeQL CLI
       run: |
         echo "Installing CodeQL CLI..."
-        curl --location https://github.com/github/codeql/releases/download/v2.0.0/codeql-cli-2.0.0.deb -o codeql-cli.deb
-        sudo dpkg -i codeql-cli.deb
+        sudo apt-get install codeql-cli
 
     - name: Analyze code
       run: |
