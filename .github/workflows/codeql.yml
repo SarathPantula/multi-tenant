@@ -8,36 +8,29 @@ env:
 jobs:
   analyze:
     runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ $detected-codeql-languages ]
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
-    - name: Setup CodeQL
-      uses: actions/setup-dotnet@v1
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v2
       with:
-        dotnet-version: 7.x
+        languages: ${{ matrix.language }}
 
-    - name: Install dependencies
-      run: |
-        echo "Installing dependencies..."
-        sudo apt-get update
-        sudo apt-get install curl
-        sudo apt-get install dpkg
+    - name: Autobuild
+      uses: github/codeql-action/autobuild@v2
 
-    - name: Install CodeQL CLI
-      run: |
-        echo "Installing CodeQL CLI..."
-        sudo apt-get install codeql-cli
-
-    - name: Analyze code
-      run: |
-        echo "Running CodeQL analysis..."
-        codeql database create --language=csharp
-        codeql database analyze --format=sarif csharp . > analysis-results.sarif
-
-    - name: Upload SARIF results
-      uses: actions/upload-artifact@v2
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v2
       with:
-        name: analysis-results.sarif
-        path: analysis-results.sarif
+        category: "/language:${{matrix.language}}"
