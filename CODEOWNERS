@@ -1,4 +1,3 @@
 core @SarathPantula
 docker-compose.yml @SarathPantula
-.github/codeql/codeql-config.yml @SarathPantula
 .github/workflows/codeql.yml @SarathPantula
