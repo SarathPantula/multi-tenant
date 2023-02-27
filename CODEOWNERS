@@ -1,3 +1,4 @@
 core @SarathPantula
 docker-compose.yml @SarathPantula
 .github/workflows/codeql.yml @SarathPantula
+.github/workflows/update-codeowners.yml @SarathPantula
