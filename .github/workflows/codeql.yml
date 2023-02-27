@@ -11,7 +11,15 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
+
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v3
+      with:
+         dotnet-version: 7.0.x
+         source-url: https://nuget.pkg.github.com/graphql-dotnet/index.json
+      env:
+         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
     - name: Setup CodeQL
       uses: actions/setup-dotnet@v1
@@ -31,14 +39,17 @@ jobs:
         curl --location https://github.com/github/codeql/releases/download/v2.0.0/codeql-cli-2.0.0.deb -o codeql-cli.deb
         sudo dpkg -i codeql-cli.deb
 
-    - name: Analyze code
-      run: |
-        echo "Running CodeQL analysis..."
-        codeql database create --language=csharp
-        codeql database analyze --format=sarif csharp . > analysis-results.sarif
-
-    - name: Upload SARIF results
-      uses: actions/upload-artifact@v2
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v2
       with:
-        name: analysis-results.sarif
-        path: analysis-results.sarif
+        queries: security-and-quality
+        languages: csharp
+
+    - name: Install dependencies
+      run: dotnet restore
+
+    - name: Build solution
+      run: dotnet build --no-restore
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v2
