@@ -1,4 +1,3 @@
-using core.Extensions.StartUpExtensions;
 using Microsoft.EntityFrameworkCore;
 using multi_tenant.Api.Extensions;
 using multi_tenant.Api.Extensions.StartupExtensions;
@@ -32,7 +31,7 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.ConfigureCoreExtensions(builder.Configuration);
+builder.Services.RegisterStartupExtensions(builder.Configuration);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
