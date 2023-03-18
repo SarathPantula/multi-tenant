@@ -1,22 +1,20 @@
+using core.Extensions.StartUpExtensions;
 using Microsoft.EntityFrameworkCore;
 using multi_tenant.Api.Extensions;
 using multi_tenant.Api.Extensions.StartupExtensions;
 using multi_tenant.Api.Filters.ActionFilters;
 using multi_tenant.Models.Models;
 using Serilog;
-using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Logging.ClearProviders();
+builder.Services.RegisterSerilogLogging(builder.Configuration);
 
-builder.Host.UseSerilog((hostname, services, configuration) =>
+// register Serilog logger
+builder.Services.AddLogging(loggingBuilder =>
 {
-    configuration
-    .WriteTo.File("Logs/multi-tenant.log",
-    restrictedToMinimumLevel: LogEventLevel.Debug,
-    rollingInterval: RollingInterval.Day)
-    .WriteTo.Console();
+    loggingBuilder.ClearProviders();
+    loggingBuilder.AddSerilog(dispose: true);
 });
 
 // Add services to the container.

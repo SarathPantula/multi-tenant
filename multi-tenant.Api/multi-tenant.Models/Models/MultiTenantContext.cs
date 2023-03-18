@@ -25,10 +25,10 @@ public partial class MultiTenantContext : DbContext
     /// <param name="options"></param>
     /// <param name="connectionStringConfiguration"></param>
     public MultiTenantContext(DbContextOptions<MultiTenantContext> options,
-        IOptions<ConnectionStringsConfiguration> connectionStringConfiguration)
+        IOptions<ConnectionStringSettings> connectionStringConfiguration)
         : base(options)
     {
-        _connectionString = connectionStringConfiguration.Value.PostgreSQLDbContext;
+        _connectionString = connectionStringConfiguration.Value.PostgresConnectionString;
     }
 
     /// <summary>
