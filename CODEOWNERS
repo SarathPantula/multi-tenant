@@ -2,3 +2,5 @@ core @SarathPantula
 docker-compose.yml @SarathPantula
 .github/workflows/codeql.yml @SarathPantula
 .github/workflows/update-codeowners.yml @SarathPantula
+multi-tenant.Api/multi-tenant.Api/Extensions/StartupExtensions/StartupExtension.cs @SarathPantula
+multi-tenant.Api/multi-tenant.Api/Program.cs @SarathPantula
