@@ -8,13 +8,10 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.RegisterSerilogLogging(builder.Configuration);
-
-// register Serilog logger
-builder.Services.AddLogging(loggingBuilder =>
+builder.Logging.ClearProviders();
+builder.Host.UseSerilog((hostName, configuration) =>
 {
-    loggingBuilder.ClearProviders();
-    loggingBuilder.AddSerilog(dispose: true);
+    builder.Services.RegisterSerilogLogging(builder.Configuration, hostName, configuration);
 });
 
 // Add services to the container.
