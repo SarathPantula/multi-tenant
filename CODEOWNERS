@@ -7,3 +7,5 @@ multi-tenant.Api/multi-tenant.Api/Program.cs @SarathPantula
 multi-tenant.Api/multi-tenant.Api/appsettings.json @SarathPantula
 multi-tenant.Api/multi-tenant.Api/multi-tenant.Api.csproj @SarathPantula
 multi-tenant.Api/multi-tenant.Models/Models/MultiTenantContext.cs @SarathPantula
+multi-tenant.Api/multi-tenant.Managers/Login/LoginHandler.cs @SarathPantula
+multi-tenant.Api/multi-tenant.Models/Enums/ErrorCode.cs @SarathPantula
