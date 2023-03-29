@@ -33,7 +33,7 @@ public class LoginHandler : IRequestHandler<LoginRequest, LoginResponse>
     /// </summary>
     /// <param name="request"></param>
     /// <param name="cancellationToken"></param>
-    /// <returns></returns>
+    /// <returns>Returns <see cref="LoginResponse"/></returns>
     public async Task<LoginResponse> Handle(LoginRequest request, CancellationToken cancellationToken)
     {
         var response = new LoginResponse();
