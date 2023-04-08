@@ -9,3 +9,12 @@ multi-tenant.Api/multi-tenant.Api/multi-tenant.Api.csproj @SarathPantula
 multi-tenant.Api/multi-tenant.Models/Models/MultiTenantContext.cs @SarathPantula
 multi-tenant.Api/multi-tenant.Managers/Login/LoginHandler.cs @SarathPantula
 multi-tenant.Api/multi-tenant.Models/Enums/ErrorCode.cs @SarathPantula
+.vscode/launch.json @SarathPantula
+.vscode/tasks.json @SarathPantula
+k8s/multi-tenant-api-deployment.yaml @SarathPantula
+k8s/multi-tenant-api-service.yaml @SarathPantula
+k8s/multi-tenant-db-deployment.yaml @SarathPantula
+k8s/multi-tenant-db-pvc.yaml @SarathPantula
+k8s/multi-tenant-db-service.yaml @SarathPantula
+k8s/redis-deployment.yaml @SarathPantula
+k8s/redis-service.yaml @SarathPantula
