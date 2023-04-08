@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: multi-tenant-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: multi-tenant-api
+  template:
+    metadata:
+      labels:
+        app: multi-tenant-api
+    spec:
+      containers:
+        - name: multi-tenant-api
+          image: <DOCKER_REGISTRY>/multitenantapi:latest
+          ports:
+            - containerPort: 80
+            - containerPort: 443
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Development
+            - name: ASPNETCORE_URLS
+              value: "https://+:443;http://+:80"

@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: multi-tenant-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: multi-tenant-db
+  template:
+    metadata:
+      labels:
+        app: multi-tenant-db
+    spec:
+      containers:
+        - name: multi-tenant-db
+          image: postgres:<POSTGRES_VERSION>
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: pgdata
+              mountPath: /var/lib/postgresql/data
+            - name: init-sql
+              mountPath: /docker-entrypoint-initdb.d/init.sql
+              subPath: init.sql
+          envFrom:
+            - configMapRef:
+                name: postgres-env
+      volumes:
+        - name: pgdata
+          persistentVolumeClaim:
+            claimName: pgdata
+        - name: init-sql
+          configMap:
+            name: init-sql
