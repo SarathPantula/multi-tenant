@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: multi-tenant-api
-          image: <DOCKER_REGISTRY>/multitenantapi:latest
+          image: 268742/multitenantapi:latest
           ports:
             - containerPort: 80
             - containerPort: 443
